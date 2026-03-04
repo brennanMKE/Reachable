@@ -94,7 +94,11 @@ actor TUI {
         case .retrying(let iv):
             out += "\u{1B}[1m\u{1B}[33m⚠ Some hosts unreachable. Retrying every \(Int(iv))s...\u{1B}[0m"
         case .done:
-            out += "\u{1B}[1m\u{1B}[32m✔ All hosts reachable. Exiting.\u{1B}[0m"
+            if hosts.count > 1 {
+                out += "\u{1B}[1m\u{1B}[32m✔ All hosts reachable. Exiting.\u{1B}[0m"
+            } else {
+                out += "\u{1B}[1m\u{1B}[32m✔ Host reachable. Exiting.\u{1B}[0m"
+            }
         }
         out += "\u{1B}[K\n\u{1B}[K\n"
 
