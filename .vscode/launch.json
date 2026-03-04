@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Reachable}",
+            "name": "Debug ReachableHost",
+            "target": "ReachableHost",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ReachableHost"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Reachable}",
+            "name": "Release ReachableHost",
+            "target": "ReachableHost",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ReachableHost"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Reachable}",
+            "name": "Debug reachable",
+            "target": "reachable",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug reachable"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Reachable}",
+            "name": "Release reachable",
+            "target": "reachable",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release reachable"
+        }
+    ]
+}
