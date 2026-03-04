@@ -7,6 +7,7 @@ enum HostStatus: Sendable {
     case checking
     case ok(method: String, detail: String)
     case failed
+    case wolSent
 }
 
 // MARK: - Draw phase (what to show in the status line)
@@ -57,6 +58,10 @@ actor TUI {
         for host in pending { statuses[host] = .checking }
     }
 
+    func markWolSent(_ host: String) {
+        statuses[host] = .wolSent
+    }
+
     func update(host: String, result: CheckResult) {
         switch result {
         case .ok(let m, let d): statuses[host] = .ok(method: m, detail: d)
@@ -77,7 +82,7 @@ actor TUI {
         var out = "\u{1B}[H"   // move cursor to top-left (no scrollback clear)
 
         // Title row
-        out += "\u{1B}[1m\u{1B}[36mMac Reachability Watch\u{1B}[0m"
+        out += "\u{1B}[1m\u{1B}[36mReachable Check\u{1B}[0m"
         out += "  \u{1B}[2m\(now)\u{1B}[0m\u{1B}[K\n"
         out += "\u{1B}[2m\u{1B}[90mPress ESC or Ctrl-C to quit\u{1B}[0m\u{1B}[K\n"
         out += "\u{1B}[K\n"
@@ -115,6 +120,7 @@ actor TUI {
         switch statuses[host] ?? .pending {
         case .ok(let m, let d): return ("\u{1B}[32m", "OK",       m, d)
         case .failed:           return ("\u{1B}[31m", "DOWN",     "–", "–")
+        case .wolSent:          return ("\u{1B}[35m", "WOL SENT", "–", "–")
         case .checking:         return ("\u{1B}[33m", "CHECKING", "–", "–")
         case .pending:          return ("\u{1B}[90m", "PENDING",  "–", "–")
         }
