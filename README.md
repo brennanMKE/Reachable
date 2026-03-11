@@ -85,3 +85,13 @@ If both fail the host is marked **DOWN** and retried after the poll interval. Ho
 Append `@MAC` to any host argument to enable Wake-on-LAN for that host. When the host is first detected as unreachable, a 102-byte magic packet (6× `0xFF` followed by 16 repetitions of the MAC address) is sent via UDP broadcast on port 9. The magic packet is sent once per run; the tool then continues polling until the Mac wakes and responds.
 
 WOL requires the target Mac to have Wake-on-Magic-Packet enabled (`sudo pmset -a womp 1`) and be reachable on the local network or via a Tailscale.
+
+#### MAC Address Privacy
+
+MAC addresses are globally unique hardware identifiers. When you provide a MAC to this tool, keep in mind:
+
+- **Local network (home, office)**: MAC addresses are broadcast-visible to all devices on the network anyway, so there is no additional privacy risk.
+- **Tailscale**: The MAC address stays on your local network segment and is never transmitted through Tailscale or DERP relays. The tool sends the magic packet directly via local broadcast—it doesn't relay through Tailscale infrastructure.
+- **Logging**: This tool does not log, store, or transmit MAC addresses anywhere. They only exist in your command-line invocation.
+
+If you're concerned about MAC address exposure in larger or shared environments, use IP-based host checking instead and skip the `@MAC` syntax.
